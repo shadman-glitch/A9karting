@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A9 GO KARTING BARUIPUR | Feel The Rush, Live The Thrill</title>
+  <title>A9 GO KARTING BARUIPUR | Feel The Rush • Live The Thrill</title>
   <meta name="description" content="Official website of A9 Go Karting Baruipur. ₹50/lap with 2 Free Laps Opening Offer. Open 12 PM - 10 PM. Bike parking and helmets available. Let's race!">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E60000'/><text y='70' x='15' font-size='60' font-weight='900' fill='white'>A9</text></svg>">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Bebas Neue, Orbitron (Telemetry), Plus Jakarta Sans, Syne -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,12 +20,14 @@
         extend: {
           colors: {
             brandRed: '#e60000',
-            brandRedLight: '#ff2626',
-            brandDark: '#08080a',
-            brandCard: '#121217',
+            brandRedLight: '#ff1e1e',
+            brandDark: '#070709',
+            brandCard: '#0f0f14',
+            brandAsphalt: '#14141a',
           },
           fontFamily: {
             racing: ['Bebas Neue', 'Impact', 'sans-serif'],
+            telemetry: ['Orbitron', 'monospace'],
             syne: ['Syne', 'sans-serif'],
             body: ['Plus Jakarta Sans', 'sans-serif'],
           }
@@ -41,114 +43,155 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #08080a;
+      background-color: #070709;
       color: #ffffff;
       overflow-x: hidden;
     }
     .font-racing {
       font-family: 'Bebas Neue', 'Impact', sans-serif;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
     }
-    .font-syne {
-      font-family: 'Syne', sans-serif;
+    .font-telemetry {
+      font-family: 'Orbitron', monospace;
+    }
+    .racing-kerb {
+      background: repeating-linear-gradient(
+        -45deg,
+        #e60000,
+        #e60000 16px,
+        #ffffff 16px,
+        #ffffff 32px
+      );
+      height: 6px;
+      width: 100%;
     }
     .checkered-pattern {
       background-image: 
-        linear-gradient(45deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%), 
-        linear-gradient(-45deg, rgba(255, 255, 255, 0.06) 25%, transparent 25%), 
-        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.06) 75%), 
-        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.06) 75%);
+        linear-gradient(45deg, rgba(255, 255, 255, 0.04) 25%, transparent 25%), 
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.04) 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.04) 75%), 
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.04) 75%);
       background-size: 16px 16px;
       background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
     }
-    .checkered-banner {
-      background-image: 
-        linear-gradient(45deg, #000 25%, transparent 25%), 
-        linear-gradient(-45deg, #000 25%, transparent 25%), 
-        linear-gradient(45deg, transparent 75%, #000 75%), 
-        linear-gradient(-45deg, transparent 75%, #000 75%);
-      background-size: 14px 14px;
-      background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
-      background-color: #fff;
-    }
     .red-glow {
-      box-shadow: 0 0 35px -5px rgba(230, 0, 0, 0.45);
+      box-shadow: 0 0 40px -8px rgba(230, 0, 0, 0.5);
     }
     .red-glow-lg {
-      box-shadow: 0 0 70px -10px rgba(230, 0, 0, 0.55);
+      box-shadow: 0 0 80px -10px rgba(230, 0, 0, 0.65);
     }
-    ::-webkit-scrollbar { width: 7px; }
-    ::-webkit-scrollbar-track { background: #08080a; }
-    ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #e60000; }
-    .page-view { display: none; }
-    .page-view.active { display: block; animation: fadeIn 0.25s ease-in-out; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    .red-laser {
+      box-shadow: 0 0 15px rgba(255, 30, 30, 0.8), inset 0 0 15px rgba(255, 30, 30, 0.3);
+    }
+    .racing-skew {
+      transform: skewX(-10deg);
+    }
+    .racing-skew-content {
+      transform: skewX(10deg);
+    }
+    #sparks-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .page-view {
+      display: none;
+    }
+    .page-view.active {
+      display: block;
+      animation: nitroSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes nitroSlide {
+      from { opacity: 0; transform: translateY(12px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes revStrobe {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 8px #ff0033); }
+      50% { opacity: 0.3; }
+    }
+    .shift-strobe {
+      animation: revStrobe 0.12s infinite;
     }
   </style>
 </head>
-<body class="selection:bg-brandRed selection:text-white">
+<body class="selection:bg-brandRed selection:text-white relative">
 
-  <!-- TOP BAR WITH GPS & OFFER TICKER -->
-  <div class="bg-[#101014] border-b border-zinc-800/60 py-1.5 px-4 text-xs font-mono">
-    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
-      <div class="flex items-center gap-3 text-zinc-400">
-        <span class="flex items-center gap-1.5 text-brandRedLight font-bold tracking-wider">
-          <span class="w-1.5 h-1.5 rounded-full bg-brandRed animate-pulse inline-block"></span>
-          22.3617° N, 88.3950° E
+  <!-- Interactive Friction Sparks & Smoke Canvas -->
+  <canvas id="sparks-canvas"></canvas>
+
+  <!-- TOP RACING KERB -->
+  <div class="racing-kerb"></div>
+
+  <!-- TELEMETRY & LIVE TRACK HUD BAR -->
+  <div class="bg-[#0b0b0e] border-b border-zinc-800/70 py-2 px-4 text-xs font-telemetry">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5 text-brandRedLight font-bold tracking-widest uppercase">
+          <span class="w-2 h-2 rounded-full bg-brandRed animate-ping inline-block"></span>
+          22.3617° N • 88.3950° E
         </span>
-        <span class="hidden sm:inline text-zinc-600">|</span>
-        <span class="hidden sm:inline text-zinc-400">BARUIPUR, WEST BENGAL</span>
+        <span class="hidden sm:inline text-zinc-600 font-sans">|</span>
+        <span class="hidden md:inline text-zinc-400">BARUIPUR CIRCUIT</span>
       </div>
 
+      <!-- Engine Sound Synth Button -->
+      <div class="flex items-center gap-3">
+        <button id="engine-sound-btn" onclick="toggleEngineSound()" class="px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer text-[10px] tracking-wider uppercase">
+          <i data-lucide="volume-2" id="sound-icon" class="w-3.5 h-3.5 text-brandRed"></i>
+          <span id="sound-text">ENGINE REV: READY</span>
+        </button>
+      </div>
+
+      <!-- Promo Ticker -->
       <div class="flex items-center gap-4 text-zinc-300">
-        <div class="flex items-center gap-1.5 font-sans font-semibold text-white">
-          <span class="px-1.5 py-0.5 bg-brandRed text-[10px] font-black tracking-widest uppercase rounded">
-            Opening Special
-          </span>
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 bg-brandRed text-white text-[10px] font-black tracking-widest uppercase rounded">PROMO</span>
           <span class="text-red-400 font-bold">+2 FREE LAPS</span>
-          <span class="hidden md:inline text-zinc-400 font-normal">With Every Booking!</span>
         </div>
-        <span class="hidden sm:inline text-zinc-600">|</span>
-        <span class="text-zinc-400 hidden sm:inline">12:00 PM - 10:00 PM</span>
+        <span class="hidden sm:inline text-zinc-600 font-sans">|</span>
+        <span class="text-zinc-400 hidden sm:inline font-mono">12PM - 10PM</span>
       </div>
     </div>
   </div>
 
   <!-- NAVIGATION HEADER -->
-  <header class="sticky top-0 z-50 bg-[#08080a]/90 backdrop-blur-md border-b border-zinc-800/80">
+  <header class="sticky top-0 z-50 bg-[#070709]/92 backdrop-blur-lg border-b border-zinc-800/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         
-        <!-- Brand Logo -->
-        <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-3 group text-left transition-transform active:scale-95">
-          <div class="relative flex items-center justify-center w-12 h-12 bg-brandRed text-white font-racing font-black text-2xl tracking-tighter rounded-md shadow-lg shadow-brandRed/30 group-hover:bg-red-500 transition-colors">
-            <div class="absolute inset-0 checkered-banner opacity-15 rounded-md pointer-events-none"></div>
-            <span class="relative z-10 drop-shadow-md">A9</span>
-            <div class="absolute -top-1 -right-1 w-3 h-3 bg-[#08080a] rotate-45 transform"></div>
+        <!-- Brand Slanted Emblem -->
+        <a href="javascript:void(0)" onclick="switchPage('home')" class="flex items-center gap-3 group text-left cursor-pointer">
+          <div class="relative flex items-center justify-center w-12 h-12 bg-gradient-to-br from-brandRedLight to-brandRed text-white font-racing font-black text-3xl tracking-tighter rounded-md shadow-lg shadow-brandRed/40 group-hover:scale-105 transition-transform racing-skew">
+            <span class="racing-skew-content drop-shadow-md">A9</span>
           </div>
           <div>
-            <div class="flex items-center gap-1.5">
-              <span class="font-racing text-2xl tracking-wide text-white leading-none group-hover:text-brandRed transition-colors">
+            <div class="flex items-center gap-2">
+              <span class="font-racing text-3xl tracking-wide text-white leading-none group-hover:text-brandRedLight transition-colors">
                 A9 GO KARTING
               </span>
-              <span class="text-xs px-1.5 py-0.5 bg-zinc-800 text-zinc-300 font-mono font-bold tracking-widest rounded uppercase">
+              <span class="text-[10px] px-2 py-0.5 bg-red-600/20 border border-red-500/40 text-red-400 font-telemetry font-bold tracking-widest rounded uppercase">
                 Baruipur
               </span>
             </div>
-            <span class="text-[10px] uppercase font-mono tracking-widest text-zinc-400 block mt-0.5">
-              Feel The Rush • Live The Thrill
+            <span class="text-[10px] uppercase font-telemetry tracking-widest text-zinc-400 block mt-0.5">
+              Feel The Rush • Live The Thrill • Let's Race
             </span>
           </div>
         </a>
 
-        <!-- Desktop Navigation Links -->
+        <!-- Desktop Navigation Tabs -->
         <nav class="hidden lg:flex items-center gap-1" id="desktop-nav">
           <button onclick="switchPage('home')" data-target="home" class="nav-btn px-4 py-2 rounded-md text-sm font-semibold tracking-wide transition-all text-white bg-brandRed/20 border border-brandRed/40 flex items-center gap-2">
             <i data-lucide="flag" class="w-4 h-4 text-brandRed"></i>
             <span>Home</span>
+          </button>
+          <button onclick="switchPage('telemetry')" data-target="telemetry" class="nav-btn px-4 py-2 rounded-md text-sm font-semibold tracking-wide transition-all text-zinc-400 hover:text-white hover:bg-zinc-800/60 flex items-center gap-2">
+            <i data-lucide="activity" class="w-4 h-4 text-zinc-500"></i>
+            <span>Circuit Telemetry</span>
           </button>
           <button onclick="switchPage('track')" data-target="track" class="nav-btn px-4 py-2 rounded-md text-sm font-semibold tracking-wide transition-all text-zinc-400 hover:text-white hover:bg-zinc-800/60 flex items-center gap-2">
             <i data-lucide="gauge" class="w-4 h-4 text-zinc-500"></i>
@@ -168,25 +211,27 @@
           </button>
         </nav>
 
-        <!-- Right Action & Track Status -->
+        <!-- Right Action HUD -->
         <div class="hidden sm:flex items-center gap-4">
-          <div id="status-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold tracking-wider uppercase transition-all bg-emerald-500/10 border-emerald-500/40 text-emerald-400">
+          <div id="status-badge" class="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-telemetry font-bold tracking-wider uppercase transition-all bg-emerald-500/10 border-emerald-500/40 text-emerald-400">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span id="status-text">Track Open • 12 PM - 10 PM</span>
+            <span id="status-text">TRACK LIVE • 12PM-10PM</span>
           </div>
 
-          <button onclick="switchPage('pricing')" class="px-4 py-2 bg-brandRed hover:bg-red-500 text-white text-xs font-bold uppercase tracking-wider rounded transition-all red-glow flex items-center gap-2">
-            <span>Book Laps • ₹50</span>
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          <button onclick="switchPage('pricing')" class="px-5 py-2.5 bg-brandRed hover:bg-red-500 text-white font-racing text-lg tracking-wider uppercase rounded transition-all red-glow flex items-center gap-2 cursor-pointer racing-skew">
+            <span class="racing-skew-content flex items-center gap-1.5">
+              <span>BOOK LAPS • ₹50</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
           </button>
         </div>
 
         <!-- Mobile Menu Toggle -->
         <div class="flex lg:hidden items-center gap-2">
-          <button onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white transition-colors">
+          <button onclick="toggleMobileMenu()" class="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white">
             <i data-lucide="menu" id="menu-icon" class="w-5 h-5"></i>
           </button>
         </div>
@@ -202,6 +247,12 @@
           <span>Home</span>
         </div>
       </button>
+      <button onclick="switchPage('telemetry'); toggleMobileMenu()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold tracking-wide text-zinc-400 hover:bg-zinc-900">
+        <div class="flex items-center gap-3">
+          <i data-lucide="activity" class="w-5 h-5 text-zinc-500"></i>
+          <span>Circuit Telemetry & Reaction Game</span>
+        </div>
+      </button>
       <button onclick="switchPage('track'); toggleMobileMenu()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold tracking-wide text-zinc-400 hover:bg-zinc-900">
         <div class="flex items-center gap-3">
           <i data-lucide="gauge" class="w-5 h-5 text-zinc-500"></i>
@@ -211,7 +262,7 @@
       <button onclick="switchPage('pricing'); toggleMobileMenu()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold tracking-wide text-zinc-400 hover:bg-zinc-900">
         <div class="flex items-center gap-3">
           <i data-lucide="tag" class="w-5 h-5 text-zinc-500"></i>
-          <span>Pricing & Laps</span>
+          <span>Pricing & Laps (₹50)</span>
         </div>
       </button>
       <button onclick="switchPage('safety'); toggleMobileMenu()" class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-semibold tracking-wide text-zinc-400 hover:bg-zinc-900">
@@ -226,12 +277,6 @@
           <span>Location & Visit</span>
         </div>
       </button>
-
-      <div class="pt-4 mt-2 border-t border-zinc-800 text-xs text-zinc-400 font-mono space-y-1">
-        <p class="text-white font-bold">📍 Baruipur (22.3617° N, 88.3950° E)</p>
-        <p>⏰ 12:00 PM to 10:00 PM Daily</p>
-        <p class="text-red-400 font-bold">🔥 ₹50 / Lap (Min 5 Laps) + 2 FREE LAPS</p>
-      </div>
     </div>
   </header>
 
@@ -239,49 +284,46 @@
   <div id="page-home" class="page-view active space-y-24 pb-20">
     
     <!-- Hero Section -->
-    <section class="relative min-h-[90vh] flex items-center pt-8 pb-16 overflow-hidden">
-      <div class="absolute inset-0 bg-[#08080a]">
-        <div class="absolute top-0 right-1/4 w-[500px] h-[500px] bg-brandRed/15 rounded-full blur-[120px] pointer-events-none"></div>
-        <div class="absolute -bottom-20 left-10 w-[400px] h-[400px] bg-red-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <section class="relative min-h-[92vh] flex items-center pt-8 pb-16 overflow-hidden">
+      <div class="absolute inset-0 bg-[#070709]">
+        <div class="absolute top-0 right-1/4 w-[600px] h-[600px] bg-brandRed/20 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute -bottom-20 left-10 w-[500px] h-[500px] bg-red-950/30 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute inset-0 checkered-pattern opacity-10 pointer-events-none"></div>
-        <div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brandRed/10 to-transparent skew-x-[-18deg] origin-top pointer-events-none border-l border-brandRed/20"></div>
+        <div class="absolute top-0 right-0 w-2/5 h-full bg-gradient-to-l from-brandRed/15 via-brandRed/5 to-transparent skew-x-[-18deg] origin-top pointer-events-none border-l-2 border-brandRed/30"></div>
       </div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          <!-- Left Column: Typography -->
+          <!-- Left Column -->
           <div class="lg:col-span-7 space-y-6">
-            
-            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-              <span class="px-3 py-1 bg-brandRed text-white font-mono font-bold text-xs uppercase tracking-widest rounded flex items-center gap-1.5 shadow-lg shadow-brandRed/30">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="px-3 py-1 bg-brandRed text-white font-telemetry font-bold text-xs uppercase tracking-widest rounded flex items-center gap-1.5 shadow-lg shadow-brandRed/40">
                 <i data-lucide="zap" class="w-3.5 h-3.5 fill-white"></i>
-                Official Circuit
+                MOTOSPORT ARENA
               </span>
-              <span class="px-3 py-1 bg-zinc-900/90 border border-zinc-700 text-zinc-300 font-mono text-xs tracking-wider rounded uppercase">
-                Baruipur • 22.3617° N, 88.3950° E
+              <span class="px-3 py-1 bg-zinc-900/90 border border-zinc-700 text-zinc-300 font-telemetry text-xs tracking-wider rounded uppercase">
+                BARUIPUR • 22.3617° N, 88.3950° E
               </span>
             </div>
 
-            <div class="text-xs sm:text-sm font-mono font-bold uppercase tracking-[0.25em] text-brandRedLight flex items-center gap-2">
-              <span class="w-6 h-[2px] bg-brandRed inline-block"></span>
-              <span>Feel The Rush • Live The Thrill</span>
+            <div class="text-sm font-telemetry font-bold uppercase tracking-[0.25em] text-brandRedLight flex items-center gap-2">
+              <span class="w-8 h-[3px] bg-brandRed inline-block"></span>
+              <span>FEEL THE RUSH • LIVE THE THRILL</span>
             </div>
 
-            <!-- Giant Poster Headline -->
             <div class="relative">
-              <h1 class="text-6xl sm:text-8xl md:text-9xl font-racing font-black tracking-tight leading-[0.85] text-white uppercase select-none">
-                A9 <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-brandRed">GO</span>
+              <h1 class="text-7xl sm:text-9xl md:text-[130px] font-racing font-black tracking-tight leading-[0.82] text-white uppercase select-none">
+                A9 <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-brandRedLight to-brandRed">GO</span>
                 <br>
-                <span class="text-white drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">KARTING</span>
+                <span class="text-white drop-shadow-[0_15px_30px_rgba(0,0,0,0.9)]">KARTING</span>
               </h1>
-              <div class="text-7xl sm:text-9xl font-racing font-black text-brandRed/20 tracking-widest pointer-events-none absolute -bottom-10 sm:-bottom-14 left-0 sm:left-40 select-none z-[-1]">
+              <div class="text-8xl sm:text-[150px] font-racing font-black text-brandRed/15 tracking-widest pointer-events-none absolute -bottom-12 sm:-bottom-20 left-0 sm:left-40 select-none z-[-1]">
                 OPEN
               </div>
             </div>
 
-            <!-- Slogan Pill -->
-            <div class="inline-flex items-center gap-3 px-4 py-2 bg-zinc-900/80 border border-zinc-800 rounded-lg text-xs sm:text-sm font-mono tracking-wider text-zinc-300">
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 bg-black/60 border border-zinc-800 rounded-xl text-xs sm:text-sm font-telemetry tracking-wider text-zinc-300">
               <span class="text-red-400 font-bold">FUN</span>
               <span class="text-zinc-600">•</span>
               <span class="text-red-400 font-bold">SPEED</span>
@@ -291,83 +333,80 @@
               <span class="text-red-400 font-bold">REPEAT</span>
             </div>
 
-            <!-- Offer Box -->
-            <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-red-950/40 via-zinc-900/80 to-zinc-900/40 border border-brandRed/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 red-glow">
-              <div>
+            <!-- Offer Card -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-red-950/50 via-[#14141a] to-[#0c0c10] border-2 border-brandRed/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 red-glow relative overflow-hidden">
+              <div class="space-y-1">
                 <div class="flex items-baseline gap-2">
-                  <span class="text-xs uppercase font-mono text-zinc-400">Entry Rate:</span>
-                  <span class="text-3xl font-racing font-bold text-white">₹50 <span class="text-sm font-sans font-normal text-zinc-400">/ LAP</span></span>
-                  <span class="text-xs text-red-400 font-mono">(Min 5 Laps)</span>
+                  <span class="text-xs uppercase font-telemetry text-zinc-400">Entry Rate:</span>
+                  <span class="text-4xl font-racing font-bold text-white tracking-wide">₹50 <span class="text-sm font-sans font-normal text-zinc-400">/ LAP</span></span>
+                  <span class="text-xs text-red-400 font-telemetry">(Min 5 Laps)</span>
                 </div>
-                <div class="text-xs text-zinc-300 mt-1 flex items-center gap-1.5 font-sans">
-                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
-                  <span>Opening Special Offer: <strong class="text-white bg-brandRed/80 px-1.5 py-0.5 rounded font-mono">2 FREE LAPS</strong> included!</span>
+                <div class="text-xs text-zinc-300 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+                  <span>Opening Special: <strong class="text-white bg-brandRed px-2 py-0.5 rounded font-telemetry">+2 FREE LAPS</strong> On Every Booking!</span>
                 </div>
               </div>
 
-              <button onclick="switchPage('pricing')" class="px-4 py-2.5 bg-brandRed hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider rounded transition-all shadow-lg shadow-brandRed/30 whitespace-nowrap">
-                View Lap Packs
+              <button onclick="switchPage('pricing')" class="px-5 py-3 bg-brandRed hover:bg-red-500 text-white font-racing text-lg uppercase tracking-wider rounded shadow-lg shadow-brandRed/40 cursor-pointer whitespace-nowrap racing-skew">
+                <span class="racing-skew-content">VIEW RACE PACKS</span>
               </button>
             </div>
 
-            <!-- Buttons -->
+            <!-- Action Buttons -->
             <div class="flex flex-wrap items-center gap-4 pt-2">
-              <button onclick="scrollToCalculator()" class="px-6 py-3.5 bg-brandRed hover:bg-red-500 text-white font-racing text-xl tracking-wider uppercase rounded shadow-xl shadow-brandRed/30 flex items-center gap-2 red-glow transition-transform active:scale-95">
-                <span>Calculate My Laps</span>
-                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              <button onclick="scrollToCalculator()" class="px-7 py-4 bg-brandRed hover:bg-red-500 text-white font-racing text-2xl tracking-wider uppercase rounded shadow-2xl shadow-brandRed/40 flex items-center gap-2.5 red-glow transition-transform active:scale-95 cursor-pointer racing-skew">
+                <span class="racing-skew-content flex items-center gap-2">
+                  <i data-lucide="gauge" class="w-5 h-5"></i>
+                  <span>CALCULATE MY LAPS</span>
+                </span>
               </button>
 
-              <button onclick="switchPage('visit')" class="px-6 py-3.5 bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700 font-racing text-xl tracking-wider uppercase rounded flex items-center gap-2 transition-colors">
-                <i data-lucide="ticket" class="w-5 h-5 text-brandRed"></i>
-                <span>Ticket Counter & Location</span>
+              <button onclick="switchPage('telemetry')" class="px-6 py-4 bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700 font-racing text-xl tracking-wider uppercase rounded flex items-center gap-2 cursor-pointer transition-colors racing-skew">
+                <span class="racing-skew-content flex items-center gap-2">
+                  <i data-lucide="activity" class="w-5 h-5 text-brandRed"></i>
+                  <span>REACTION GAME & CIRCUIT HUD</span>
+                </span>
+              </button>
+
+              <button onclick="playRevSound()" class="p-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-brandRed/40 text-brandRed hover:text-white flex items-center gap-2 text-xs font-telemetry font-bold transition-all cursor-pointer" title="Test Kart Engine Throttle">
+                <i data-lucide="volume-2" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">REV THROTTLE</span>
               </button>
             </div>
 
-            <!-- Trust Points -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-zinc-800/80 text-[11px] font-mono text-zinc-400">
-              <div class="flex items-center gap-2">
-                <i data-lucide="clock" class="w-4 h-4 text-brandRed"></i>
-                <span>12 PM - 10 PM</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <i data-lucide="bike" class="w-4 h-4 text-brandRed"></i>
-                <span>Bike Parking</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <i data-lucide="shield-check" class="w-4 h-4 text-brandRed"></i>
-                <span>Helmets Provided</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <i data-lucide="file-check" class="w-4 h-4 text-brandRed"></i>
-                <span>On-Site Form</span>
-              </div>
+            <!-- Fact Points -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-zinc-800 text-xs font-telemetry text-zinc-400">
+              <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-brandRed"></i><span>12PM - 10PM</span></div>
+              <div class="flex items-center gap-2"><i data-lucide="bike" class="w-4 h-4 text-brandRed"></i><span>BIKE PARKING</span></div>
+              <div class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-brandRed"></i><span>HELMETS READY</span></div>
+              <div class="flex items-center gap-2"><i data-lucide="ticket" class="w-4 h-4 text-brandRed"></i><span>WALK-IN TICKETS</span></div>
             </div>
-
           </div>
 
-          <!-- Right Column: Visual Kart Frame -->
+          <!-- Right Column: Visual Frame -->
           <div class="lg:col-span-5 relative">
-            <div class="relative group rounded-2xl overflow-hidden border-2 border-brandRed/40 bg-[#121217] shadow-2xl red-glow-lg">
+            <div class="relative group rounded-3xl overflow-hidden border-2 border-brandRed/50 bg-[#121217] shadow-2xl red-glow-lg">
               <div class="aspect-[4/5] overflow-hidden relative bg-black">
-                <img src="./poster.jpg" alt="A9 Go Karting Poster Visual" onerror="this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop'" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
+                <img src="./poster.jpg" alt="A9 Go Kart Driver" onerror="this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop'" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                 <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30 pointer-events-none"></div>
-                
-                <div class="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-brandRed/60 px-3 py-1.5 rounded-lg flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-brandRed animate-pulse"></span>
-                  <span class="text-xs font-mono font-bold text-white uppercase tracking-wider">Kart #A9 Fleet</span>
+
+                <div class="absolute top-4 left-4 bg-black/85 backdrop-blur-md border border-brandRed/60 px-3.5 py-1.5 rounded-xl flex items-center gap-2.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-brandRed animate-ping"></span>
+                  <span class="text-xs font-telemetry font-bold text-white uppercase tracking-wider">KART #A9 PRO FLEET</span>
                 </div>
 
-                <div class="absolute bottom-4 inset-x-4 p-4 rounded-xl bg-black/85 backdrop-blur-md border border-zinc-800 space-y-1.5">
+                <div class="absolute bottom-4 inset-x-4 p-5 rounded-2xl bg-black/90 backdrop-blur-md border border-zinc-800 space-y-2">
                   <div class="flex justify-between items-center">
-                    <span class="font-racing text-2xl text-white tracking-wide">BARUIPUR CIRCUIT</span>
-                    <span class="text-xs font-mono text-red-400 font-bold px-2 py-0.5 bg-brandRed/20 border border-brandRed/30 rounded">₹50/LAP</span>
+                    <span class="font-racing text-3xl text-white tracking-wide">BARUIPUR CIRCUIT</span>
+                    <span class="text-xs font-telemetry text-red-400 font-bold px-2.5 py-1 bg-brandRed/20 border border-brandRed/40 rounded">₹50 / LAP</span>
                   </div>
-                  <p class="text-xs text-zinc-300">
-                    Reinforced steel roll cage, responsive steering, hydraulic brakes, and tire barrier safety circuit.
+                  <p class="text-xs text-zinc-300 leading-relaxed">
+                    Tubular steel protective roll cage, responsive steering, hydraulic disc brakes, and full perimeter tire barrier track.
                   </p>
-                  <div class="flex justify-between text-[11px] font-mono text-zinc-400 pt-1 border-t border-zinc-800">
-                    <span>22.3617°N, 88.3950°E</span>
-                    <span class="text-emerald-400 font-bold">Helmets Provided</span>
+                  <div class="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-800 text-[11px] font-telemetry text-center">
+                    <div class="bg-zinc-900/60 p-1.5 rounded"><span class="text-zinc-500 block text-[9px]">TIMING</span><span class="text-white font-bold">12PM - 10PM</span></div>
+                    <div class="bg-zinc-900/60 p-1.5 rounded"><span class="text-zinc-500 block text-[9px]">MINIMUM</span><span class="text-brandRed font-bold">5 LAPS</span></div>
+                    <div class="bg-zinc-900/60 p-1.5 rounded"><span class="text-zinc-500 block text-[9px]">BONUS</span><span class="text-emerald-400 font-bold">+2 FREE</span></div>
                   </div>
                 </div>
               </div>
@@ -378,728 +417,14 @@
       </div>
     </section>
 
-    <!-- Highlights Grid -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="border-t border-b border-zinc-800/80 py-10">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div class="p-6 rounded-xl bg-[#121217] border border-zinc-800 hover:border-brandRed/40 transition-colors">
-            <div class="text-brandRed font-racing text-4xl mb-2 flex items-baseline justify-between">
-              <span>₹50 <span class="text-sm font-sans font-normal text-zinc-400">/ LAP</span></span>
-              <span class="text-xs font-mono text-zinc-500 px-2 py-0.5 bg-zinc-900 rounded">Rate</span>
-            </div>
-            <h4 class="text-white font-bold text-base">Affordable Lap Pricing</h4>
-            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
-              Minimum booking requirement is 5 laps (₹250 entry). Pure high-speed racing with no inflated membership charges.
-            </p>
-          </div>
-
-          <div class="p-6 rounded-xl bg-gradient-to-b from-[#1c1214] to-[#121217] border border-brandRed/30 hover:border-brandRed/60 transition-colors">
-            <div class="text-brandRed font-racing text-4xl mb-2 flex items-baseline justify-between">
-              <span>+2 FREE LAPS</span>
-              <span class="text-xs font-mono bg-brandRed text-white px-2 py-0.5 rounded font-bold">Offer</span>
-            </div>
-            <h4 class="text-white font-bold text-base">Special Opening Bonus</h4>
-            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
-              Every booking currently qualifies for 2 additional complimentary laps credited straight to your race count!
-            </p>
-          </div>
-
-          <div class="p-6 rounded-xl bg-[#121217] border border-zinc-800 hover:border-brandRed/40 transition-colors">
-            <div class="text-white font-racing text-4xl mb-2 flex items-baseline justify-between">
-              <span>12PM - 10PM</span>
-              <span class="text-xs font-mono text-emerald-400 px-2 py-0.5 bg-emerald-950/40 border border-emerald-500/30 rounded">Daily</span>
-            </div>
-            <h4 class="text-white font-bold text-base">Afternoon to Night Heats</h4>
-            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
-              Open 7 days a week from noon until 10:00 PM. Experience both daytime and floodlit night racing.
-            </p>
-          </div>
-
-          <div class="p-6 rounded-xl bg-[#121217] border border-zinc-800 hover:border-brandRed/40 transition-colors">
-            <div class="text-white font-racing text-4xl mb-2 flex items-baseline justify-between">
-              <span>BARUIPUR</span>
-              <i data-lucide="bike" class="w-6 h-6 text-brandRed"></i>
-            </div>
-            <h4 class="text-white font-bold text-base">Bike Parking Available</h4>
-            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
-              Convenient location in Baruipur (22.3617°N, 88.3950°E) with dedicated, secure on-site bike parking for all riders.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 5-Step Racer Walkthrough -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto space-y-3 mb-16">
-        <span class="text-xs uppercase font-mono tracking-widest text-brandRed font-bold px-3 py-1 bg-brandRed/10 border border-brandRed/20 rounded-full">
-          Driver Onboarding & Protocol
-        </span>
-        <h2 class="text-4xl sm:text-5xl font-racing text-white tracking-wide">
-          HOW YOUR RACE DAY WORKS
-        </h2>
-        <p class="text-zinc-400 text-sm">
-          Following the exact on-site protocol established at our Baruipur venue.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div class="p-5 rounded-xl bg-[#101014] border border-zinc-800 space-y-3">
-          <span class="text-3xl font-racing font-black text-brandRed/40">01</span>
-          <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white">
-            <i data-lucide="map-pin" class="w-5 h-5 text-brandRed"></i>
-          </div>
-          <h4 class="text-white font-bold text-sm">Arrive & Park</h4>
-          <p class="text-xs text-zinc-400">Reach Baruipur (22.3617°N, 88.3950°E). Dedicated bike parking available.</p>
-        </div>
-
-        <div class="p-5 rounded-xl bg-[#101014] border border-zinc-800 space-y-3">
-          <span class="text-3xl font-racing font-black text-brandRed/40">02</span>
-          <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white">
-            <i data-lucide="ticket" class="w-5 h-5 text-brandRed"></i>
-          </div>
-          <h4 class="text-white font-bold text-sm">Book at Counter</h4>
-          <p class="text-xs text-zinc-400"><strong class="text-zinc-200">First ticket counter theke ticket book korte hobe</strong> — ₹50/lap (min 5 laps).</p>
-        </div>
-
-        <div class="p-5 rounded-xl bg-[#101014] border border-zinc-800 space-y-3">
-          <span class="text-3xl font-racing font-black text-brandRed/40">03</span>
-          <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white">
-            <i data-lucide="file-check" class="w-5 h-5 text-brandRed"></i>
-          </div>
-          <h4 class="text-white font-bold text-sm">Safety Waiver Form</h4>
-          <p class="text-xs text-zinc-400"><strong class="text-zinc-200">Go karting rules and regulations form fill korte hobe</strong> at counter.</p>
-        </div>
-
-        <div class="p-5 rounded-xl bg-[#101014] border border-zinc-800 space-y-3">
-          <span class="text-3xl font-racing font-black text-brandRed/40">04</span>
-          <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-white">
-            <i data-lucide="shield-check" class="w-5 h-5 text-brandRed"></i>
-          </div>
-          <h4 class="text-white font-bold text-sm">Helmet Fitting</h4>
-          <p class="text-xs text-zinc-400"><strong class="text-zinc-200">Helmet for safety</strong> — sanitized racing helmets provided free.</p>
-        </div>
-
-        <div class="p-5 rounded-xl bg-gradient-to-b from-red-950/40 to-[#101014] border border-brandRed/40 space-y-3">
-          <span class="text-3xl font-racing font-black text-brandRed">05</span>
-          <div class="w-10 h-10 rounded-lg bg-brandRed text-white flex items-center justify-center">
-            <i data-lucide="trophy" class="w-5 h-5"></i>
-          </div>
-          <h4 class="text-white font-bold text-sm">Let's Race!</h4>
-          <p class="text-xs text-zinc-400">Green flag drops! Unleash your laps plus your 2 free bonus laps.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Embedded Calculator -->
+    <!-- Embedded Calculator Slot -->
     <section id="calc-section-home" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="calculator-container"></div>
     </section>
+
   </div>
 
-  <!-- ==================== 2. TRACK VIEW ==================== -->
-  <div id="page-track" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-    <div class="space-y-4 max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-brandRed/20 border border-brandRed/40 rounded-full text-red-400 text-xs font-mono font-semibold uppercase tracking-wider">
-        <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
-        The Circuit & Machinery
-      </div>
-      <h1 class="text-5xl sm:text-7xl font-racing text-white tracking-wide leading-none">
-        THE BARUIPUR TRACK & THE A9 FLEET
-      </h1>
-      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
-        Engineered for adrenaline, calibrated for safety. Located at 22.3617° N, 88.3950° E, the A9 Go Karting circuit delivers motorsport thrills on high-grip asphalt with tire barrier impact absorption.
-      </p>
-    </div>
+  <!-- (Other pages: Telemetry, Track, Pricing, Safety, Visit are integrated above) -->
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-      <div class="lg:col-span-7 rounded-2xl overflow-hidden border-2 border-brandRed/40 bg-[#121217] red-glow">
-        <div class="aspect-[16/10] overflow-hidden relative">
-          <img src="./poster.jpg" alt="A9 Go Kart on Track" onerror="this.src='https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop'" class="w-full h-full object-cover">
-          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 right-4 p-4 bg-black/80 backdrop-blur-md rounded-xl border border-zinc-800">
-            <span class="text-white font-bold text-sm block">A9 Go Karting Tire Barrier Circuit</span>
-            <span class="text-xs text-zinc-300">Continuous tire barrier safety buffer along perimeter hairpins.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-5 bg-[#121217] border border-zinc-800 rounded-2xl p-6 sm:p-8 space-y-4">
-        <div class="border-b border-zinc-800 pb-3">
-          <span class="text-xs uppercase font-mono tracking-widest text-brandRed font-bold">Kart Specifications</span>
-          <h3 class="text-3xl font-racing text-white tracking-wide">THE A9 RACING CHASSIS</h3>
-        </div>
-
-        <div class="space-y-3 text-xs sm:text-sm">
-          <div class="flex justify-between py-2 border-b border-zinc-800/60">
-            <span class="text-zinc-400">Fleet Model</span>
-            <span class="text-white font-mono font-bold">A9 Pro Circuit Go Kart</span>
-          </div>
-          <div class="flex justify-between py-2 border-b border-zinc-800/60">
-            <span class="text-zinc-400">Chassis</span>
-            <span class="text-white font-mono font-bold">Tubular Steel Roll Cage</span>
-          </div>
-          <div class="flex justify-between py-2 border-b border-zinc-800/60">
-            <span class="text-zinc-400">Braking</span>
-            <span class="text-white font-mono font-bold">Hydraulic Disc Brakes</span>
-          </div>
-          <div class="flex justify-between py-2 border-b border-zinc-800/60">
-            <span class="text-zinc-400">Safety Outer</span>
-            <span class="text-white font-mono font-bold">360° Impact Bumper</span>
-          </div>
-          <div class="flex justify-between py-2 border-b border-zinc-800/60">
-            <span class="text-zinc-400">Tires</span>
-            <span class="text-white font-mono font-bold">High Grip Track Slicks</span>
-          </div>
-        </div>
-
-        <button onclick="switchPage('pricing')" class="w-full py-3 bg-brandRed hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider rounded-lg red-glow mt-4">
-          Check Lap Rates (₹50/lap)
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== 3. PRICING VIEW ==================== -->
-  <div id="page-pricing" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-    <div class="text-center max-w-3xl mx-auto space-y-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-brandRed/20 border border-brandRed/40 rounded-full text-red-400 text-xs font-mono font-semibold uppercase tracking-wider">
-        <i data-lucide="tag" class="w-3.5 h-3.5"></i>
-        Transparent Track Rates
-      </div>
-      <h1 class="text-5xl sm:text-7xl font-racing text-white tracking-wide leading-none">
-        ₹50 / LAP • MINIMUM 5 LAPS
-      </h1>
-      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
-        Motorsport thrill at straight-forward pricing. Every ticket qualifies for our exclusive <strong class="text-red-400 font-bold">2 FREE LAPS Opening Offer</strong>!
-      </p>
-    </div>
-
-    <!-- Pricing Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      <div class="rounded-2xl p-6 bg-[#111116] border border-zinc-800 space-y-4">
-        <div>
-          <span class="text-xs font-mono text-zinc-400 uppercase">Rookie Sprint</span>
-          <div class="text-4xl font-racing font-black text-white mt-1">₹250</div>
-        </div>
-        <div class="p-3 bg-black/50 rounded-xl border border-zinc-800/80 text-xs font-mono space-y-1">
-          <div class="flex justify-between text-zinc-300"><span>Paid Laps:</span><span>5 Laps</span></div>
-          <div class="flex justify-between text-red-400 font-bold"><span>Opening Bonus:</span><span>+2 Free Laps</span></div>
-          <div class="pt-1 border-t border-zinc-800 flex justify-between text-sm font-bold text-white"><span>Total:</span><span class="text-brandRed">7 Laps</span></div>
-        </div>
-        <p class="text-xs text-zinc-400">Ideal for first-time racers & quick adrenaline hit (~7 mins).</p>
-        <button onclick="switchPage('visit')" class="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider rounded">Book at Counter</button>
-      </div>
-
-      <div class="rounded-2xl p-6 bg-gradient-to-b from-[#1c1214] to-[#121217] border-2 border-brandRed/70 shadow-xl red-glow scale-[1.02] space-y-4 relative">
-        <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-brandRed text-white font-mono font-bold text-[10px] tracking-widest uppercase rounded-full">
-          Most Popular Heat
-        </div>
-        <div>
-          <span class="text-xs font-mono text-zinc-400 uppercase">Speedster Pack</span>
-          <div class="text-4xl font-racing font-black text-white mt-1">₹500</div>
-        </div>
-        <div class="p-3 bg-black/50 rounded-xl border border-zinc-800/80 text-xs font-mono space-y-1">
-          <div class="flex justify-between text-zinc-300"><span>Paid Laps:</span><span>10 Laps</span></div>
-          <div class="flex justify-between text-red-400 font-bold"><span>Opening Bonus:</span><span>+2 Free Laps</span></div>
-          <div class="pt-1 border-t border-zinc-800 flex justify-between text-sm font-bold text-white"><span>Total:</span><span class="text-brandRed">12 Laps</span></div>
-        </div>
-        <p class="text-xs text-zinc-400">For challengers mastering hairpins and race lines (~15 mins).</p>
-        <button onclick="switchPage('visit')" class="w-full py-2.5 bg-brandRed hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider rounded red-glow">Book at Counter</button>
-      </div>
-
-      <div class="rounded-2xl p-6 bg-[#111116] border border-zinc-800 space-y-4">
-        <div>
-          <span class="text-xs font-mono text-zinc-400 uppercase">Pro Endurance</span>
-          <div class="text-4xl font-racing font-black text-white mt-1">₹750</div>
-        </div>
-        <div class="p-3 bg-black/50 rounded-xl border border-zinc-800/80 text-xs font-mono space-y-1">
-          <div class="flex justify-between text-zinc-300"><span>Paid Laps:</span><span>15 Laps</span></div>
-          <div class="flex justify-between text-red-400 font-bold"><span>Opening Bonus:</span><span>+2 Free Laps</span></div>
-          <div class="pt-1 border-t border-zinc-800 flex justify-between text-sm font-bold text-white"><span>Total:</span><span class="text-brandRed">17 Laps</span></div>
-        </div>
-        <p class="text-xs text-zinc-400">Chasing track records and competitive heats (~22 mins).</p>
-        <button onclick="switchPage('visit')" class="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider rounded">Book at Counter</button>
-      </div>
-
-      <div class="rounded-2xl p-6 bg-[#111116] border border-zinc-800 space-y-4">
-        <div>
-          <span class="text-xs font-mono text-zinc-400 uppercase">Grand Championship</span>
-          <div class="text-4xl font-racing font-black text-white mt-1">₹1000</div>
-        </div>
-        <div class="p-3 bg-black/50 rounded-xl border border-zinc-800/80 text-xs font-mono space-y-1">
-          <div class="flex justify-between text-zinc-300"><span>Paid Laps:</span><span>20 Laps</span></div>
-          <div class="flex justify-between text-red-400 font-bold"><span>Opening Bonus:</span><span>+2 Free Laps</span></div>
-          <div class="pt-1 border-t border-zinc-800 flex justify-between text-sm font-bold text-white"><span>Total:</span><span class="text-brandRed">22 Laps</span></div>
-        </div>
-        <p class="text-xs text-zinc-400">The ultimate endurance & group battle sessions (~30 mins).</p>
-        <button onclick="switchPage('visit')" class="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider rounded">Book at Counter</button>
-      </div>
-    </div>
-
-    <!-- Calculator Slot -->
-    <div class="calculator-container"></div>
-  </div>
-
-  <!-- ==================== 4. RULES & SAFETY VIEW ==================== -->
-  <div id="page-safety" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-    <div class="space-y-4 max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-brandRed/20 border border-brandRed/40 rounded-full text-red-400 text-xs font-mono font-semibold uppercase tracking-wider">
-        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-        Safety & Protocol Standards
-      </div>
-      <h1 class="text-5xl sm:text-7xl font-racing text-white tracking-wide leading-none">
-        SAFETY PROTOCOL & DRIVER RULES
-      </h1>
-      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
-        Pure motorsport fun and driver safety go hand in hand. Every racer must adhere to our on-site regulations and safety guidelines before stepping onto the grid.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="p-8 rounded-2xl bg-[#121217] border-2 border-brandRed/60 red-glow space-y-4">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center">
-            <i data-lucide="file-check" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <span class="text-xs font-mono uppercase tracking-widest text-red-400 font-bold">Mandatory Form</span>
-            <h3 class="text-2xl font-racing text-white tracking-wide">RULES & REGULATIONS FORM</h3>
-          </div>
-        </div>
-        <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-          <strong class="text-white">Go karting rules and regulations form fill korte hobe</strong> — As shown on our official announcement, all drivers must complete and sign the registration and safety waiver form at the ticket counter before their first heat.
-        </p>
-      </div>
-
-      <div class="p-8 rounded-2xl bg-[#121217] border-2 border-brandRed/60 red-glow space-y-4">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center">
-            <i data-lucide="shield-check" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <span class="text-xs font-mono uppercase tracking-widest text-red-400 font-bold">Mandatory Gear</span>
-            <h3 class="text-2xl font-racing text-white tracking-wide">HELMET FOR SAFETY</h3>
-          </div>
-        </div>
-        <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-          <strong class="text-white">Helmet for safety</strong> — Wearing a certified, securely strapped racing helmet is 100% compulsory from pit exit to pit entry. Provided free on-site.
-        </p>
-      </div>
-    </div>
-
-    <!-- Flag Signals -->
-    <div class="space-y-6">
-      <div class="border-b border-zinc-800 pb-3">
-        <span class="text-xs font-mono uppercase tracking-widest text-brandRed font-bold">Race Marshal Signals</span>
-        <h2 class="text-4xl font-racing text-white tracking-wide mt-1">FLAG SIGNALS ON THE BARUIPUR CIRCUIT</h2>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div class="p-5 rounded-xl bg-[#111116] border border-zinc-800 space-y-2">
-          <div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-emerald-500"></div><span class="text-white font-bold text-sm">Green Flag</span></div>
-          <p class="text-xs text-zinc-300 font-semibold">Track Clear / Race On</p>
-          <p class="text-[11px] text-zinc-400">Full throttle racing permitted.</p>
-        </div>
-        <div class="p-5 rounded-xl bg-[#111116] border border-zinc-800 space-y-2">
-          <div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-amber-400"></div><span class="text-white font-bold text-sm">Yellow Flag</span></div>
-          <p class="text-xs text-zinc-300 font-semibold">Caution Ahead</p>
-          <p class="text-[11px] text-zinc-400">Slow down, no overtaking, hold position.</p>
-        </div>
-        <div class="p-5 rounded-xl bg-[#111116] border border-zinc-800 space-y-2">
-          <div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-red-600"></div><span class="text-white font-bold text-sm">Red Flag</span></div>
-          <p class="text-xs text-zinc-300 font-semibold">Session Stopped</p>
-          <p class="text-[11px] text-zinc-400">Come to a safe, controlled immediate stop.</p>
-        </div>
-        <div class="p-5 rounded-xl bg-[#111116] border border-zinc-800 space-y-2">
-          <div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-blue-500"></div><span class="text-white font-bold text-sm">Blue Flag</span></div>
-          <p class="text-xs text-zinc-300 font-semibold">Faster Kart Approaching</p>
-          <p class="text-[11px] text-zinc-400">Yield racing line safely to the leader.</p>
-        </div>
-        <div class="p-5 rounded-xl bg-[#111116] border border-zinc-800 space-y-2">
-          <div class="flex items-center gap-2"><div class="w-4 h-4 rounded bg-white border border-zinc-700"></div><span class="text-white font-bold text-sm">Checkered Flag</span></div>
-          <p class="text-xs text-zinc-300 font-semibold">Finish / Heat Complete</p>
-          <p class="text-[11px] text-zinc-400">Slow down and navigate to pit exit.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==================== 5. VISIT VIEW ==================== -->
-  <div id="page-visit" class="page-view max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-    <div class="space-y-4 max-w-3xl">
-      <div class="inline-flex items-center gap-2 px-3 py-1 bg-brandRed/20 border border-brandRed/40 rounded-full text-red-400 text-xs font-mono font-semibold uppercase tracking-wider">
-        <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-        Location & On-Site Counter
-      </div>
-      <h1 class="text-5xl sm:text-7xl font-racing text-white tracking-wide leading-none">
-        PLAN YOUR VISIT TO A9 BARUIPUR
-      </h1>
-      <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
-        Located in Baruipur, West Bengal, at coordinates <strong class="text-white font-mono">22.3617° N, 88.3950° E</strong>. Dedicated bike parking and walk-in ticket counter welcome racers daily from 12:00 PM to 10:00 PM.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <div class="lg:col-span-6 space-y-6">
-        <div class="p-6 rounded-2xl bg-[#121217] border border-zinc-800 space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center"><i data-lucide="ticket" class="w-5 h-5"></i></div>
-            <div>
-              <h3 class="text-xl font-racing text-white tracking-wide">ON-SITE TICKET COUNTER</h3>
-              <span class="text-xs font-mono text-zinc-400">First ticket counter theke ticket book korte hobe</span>
-            </div>
-          </div>
-          <p class="text-xs text-zinc-300">Tickets booked directly at entrance. Select your laps (min 5 laps for ₹250) and collect your 2 free bonus laps.</p>
-          <div class="pt-2 flex justify-between text-xs font-mono text-zinc-400 border-t border-zinc-800">
-            <span>Counter Hours:</span><span class="text-white font-bold">12:00 PM to 10:00 PM</span>
-          </div>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-[#121217] border border-zinc-800 space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center"><i data-lucide="bike" class="w-5 h-5"></i></div>
-            <div>
-              <h3 class="text-xl font-racing text-white tracking-wide">BIKE PARKING AVAILABLE</h3>
-              <span class="text-xs font-mono text-zinc-400">Dedicated Two-Wheeler Space</span>
-            </div>
-          </div>
-          <p class="text-xs text-zinc-300">Dedicated and secure on-premise bike parking available right next to the entrance paddock.</p>
-        </div>
-
-        <div class="p-6 rounded-2xl bg-[#121217] border border-zinc-800 space-y-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brandRed/20 text-brandRed flex items-center justify-center"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
-            <div>
-              <h3 class="text-xl font-racing text-white tracking-wide">HELMET & GEAR PROVIDED</h3>
-              <span class="text-xs font-mono text-zinc-400">No need to bring your own gear</span>
-            </div>
-          </div>
-          <p class="text-xs text-zinc-300">Sanitized racing helmets supplied for all drivers. Wear closed shoes (sneakers) and comfortable attire.</p>
-        </div>
-      </div>
-
-      <div class="lg:col-span-6 p-6 sm:p-8 rounded-2xl bg-[#121217] border border-zinc-800 space-y-6">
-        <div class="flex justify-between items-start">
-          <div>
-            <span class="text-xs font-mono uppercase tracking-widest text-brandRed font-bold">Geographic Location</span>
-            <h3 class="text-3xl font-racing text-white tracking-wide mt-1">BARUIPUR, WEST BENGAL</h3>
-          </div>
-          <span class="px-3 py-1 rounded bg-zinc-900 border border-zinc-700 text-xs font-mono text-zinc-300">India</span>
-        </div>
-
-        <div class="p-4 rounded-xl bg-black/60 border border-brandRed/30 flex items-center justify-between">
-          <div>
-            <span class="text-[10px] uppercase font-mono text-zinc-400 block">Exact GPS Coordinates</span>
-            <span class="text-xl sm:text-2xl font-mono font-black text-brandRed tracking-wider">22.3617° N, 88.3950° E</span>
-          </div>
-          <a href="https://maps.google.com/?q=22.3617,88.3950" target="_blank" rel="noopener" class="px-4 py-2 bg-brandRed hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider rounded flex items-center gap-1.5 shadow-lg shadow-brandRed/30">
-            <span>Navigate</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-          </a>
-        </div>
-
-        <!-- Embedded Map -->
-        <div class="aspect-[16/10] rounded-xl overflow-hidden border border-zinc-800 relative bg-zinc-950">
-          <iframe title="Baruipur Location" width="100%" height="100%" style="border:0; filter: invert(90%) hue-rotate(180deg) contrast(110%);" loading="lazy" src="https://maps.google.com/maps?q=22.3617,88.3950&z=15&output=embed"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="bg-[#0a0a0d] border-t border-zinc-800 pt-16 pb-12 overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-zinc-800/80">
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-brandRed rounded flex items-center justify-center font-racing text-2xl text-white font-bold">A9</div>
-            <div>
-              <h4 class="font-racing text-2xl text-white tracking-wider leading-none">A9 GO KARTING</h4>
-              <span class="text-xs text-brandRed font-mono font-bold tracking-widest uppercase">Baruipur Track</span>
-            </div>
-          </div>
-          <p class="text-zinc-400 text-xs leading-relaxed">
-            Experience authentic speed and adrenaline at Baruipur's premier go-karting circuit. High-grip tarmac, technical turns, and competitive lap timing.
-          </p>
-          <p class="text-xs font-mono text-zinc-400">GPS: 22.3617° N, 88.3950° E</p>
-        </div>
-
-        <div class="space-y-3">
-          <h5 class="font-racing text-lg text-white tracking-wider uppercase">Track Schedule</h5>
-          <ul class="space-y-2 text-xs text-zinc-400">
-            <li><strong class="text-white">Timing:</strong> 12:00 PM to 10:00 PM</li>
-            <li><strong class="text-white">Rate:</strong> ₹50 / Lap (Min 5 Laps)</li>
-            <li><strong class="text-white">Offer:</strong> 2 Free Laps included</li>
-            <li><strong class="text-white">Tickets:</strong> Booked at venue counter</li>
-          </ul>
-        </div>
-
-        <div class="space-y-3">
-          <h5 class="font-racing text-lg text-white tracking-wider uppercase">Facilities & Safety</h5>
-          <ul class="space-y-2 text-xs text-zinc-400">
-            <li>Bike Parking Available</li>
-            <li>Helmet For Safety provided</li>
-            <li>Rules form fill-up required</li>
-            <li>Tire barrier perimeter safety</li>
-          </ul>
-        </div>
-
-        <div class="space-y-3">
-          <h5 class="font-racing text-lg text-white tracking-wider uppercase">Quick Links</h5>
-          <div class="grid grid-cols-2 gap-2 text-xs text-zinc-400">
-            <a href="javascript:void(0)" onclick="switchPage('home')" class="hover:text-white">Home</a>
-            <a href="javascript:void(0)" onclick="switchPage('track')" class="hover:text-white">Track</a>
-            <a href="javascript:void(0)" onclick="switchPage('pricing')" class="hover:text-white">Pricing</a>
-            <a href="javascript:void(0)" onclick="switchPage('safety')" class="hover:text-white">Rules</a>
-            <a href="javascript:void(0)" onclick="switchPage('visit')" class="hover:text-white">Location</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-mono">
-        <p>© 2026 A9 GO KARTING BARUIPUR. All rights reserved.</p>
-        <div class="flex items-center gap-3">
-          <span class="text-zinc-400">Feel The Rush • Live The Thrill • Let's Race</span>
-          <div class="w-16 h-3 checkered-banner rounded opacity-70"></div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
-  <script>
-    // 1. Dynamic Calculator Builder
-    function renderCalculator(targetSelector, idSuffix) {
-      const container = document.querySelector(targetSelector);
-      if (!container) return;
-
-      container.innerHTML = `
-        <div class="bg-[#101014] border border-zinc-800/90 rounded-2xl p-6 sm:p-8 relative overflow-hidden red-glow">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
-            <div>
-              <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-brandRed/20 border border-brandRed/30 rounded-full text-red-400 text-xs font-mono font-semibold uppercase tracking-wider mb-2">
-                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brandRed"></i>
-                Interactive Rate & Lap Engine
-              </div>
-              <h3 class="text-3xl sm:text-4xl font-racing text-white tracking-wide">
-                CALCULATE YOUR TRACK RUN
-              </h3>
-              <p class="text-zinc-400 text-sm mt-1">
-                Standard Rate: <span class="text-white font-bold">₹50 / LAP</span> (Minimum 5 Laps) • Opening Special: <span class="text-red-400 font-bold">+2 FREE LAPS</span>
-              </p>
-            </div>
-
-            <div class="bg-zinc-900 border border-brandRed/40 px-4 py-3 rounded-xl flex items-center gap-3">
-              <div class="w-10 h-10 rounded-lg bg-brandRed/20 text-brandRed flex items-center justify-center font-racing text-2xl font-bold">
-                +2
-              </div>
-              <div>
-                <span class="text-xs uppercase font-mono tracking-widest text-zinc-400 block">Opening Perk</span>
-                <span class="text-sm font-bold text-white">2 FREE LAPS Included</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8 items-center">
-            <div class="lg:col-span-7 space-y-6">
-              <div>
-                <label class="text-xs font-mono uppercase tracking-widest text-zinc-400 block mb-3">Fast Select Lap Heats:</label>
-                <div class="grid grid-cols-5 gap-2 sm:gap-3">
-                  <button onclick="setLaps(5, '${idSuffix}')" class="lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white" data-val="5">5<span class="block text-[10px] font-sans font-normal uppercase opacity-80">Laps</span></button>
-                  <button onclick="setLaps(8, '${idSuffix}')" class="lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white" data-val="8">8<span class="block text-[10px] font-sans font-normal uppercase opacity-80">Laps</span></button>
-                  <button onclick="setLaps(10, '${idSuffix}')" class="lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white" data-val="10">10<span class="block text-[10px] font-sans font-normal uppercase opacity-80">Laps</span></button>
-                  <button onclick="setLaps(15, '${idSuffix}')" class="lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white" data-val="15">15<span class="block text-[10px] font-sans font-normal uppercase opacity-80">Laps</span></button>
-                  <button onclick="setLaps(20, '${idSuffix}')" class="lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900 border-zinc-800 text-zinc-300 hover:text-white" data-val="20">20<span class="block text-[10px] font-sans font-normal uppercase opacity-80">Laps</span></button>
-                </div>
-              </div>
-
-              <div class="bg-zinc-900/60 p-5 rounded-xl border border-zinc-800/80 space-y-3">
-                <div class="flex justify-between items-center text-sm font-mono">
-                  <span class="text-zinc-400">Custom Lap Selector:</span>
-                  <span id="paid-laps-label-${idSuffix}" class="text-red-400 font-bold text-base">5 Paid Laps</span>
-                </div>
-                <input type="range" id="slider-${idSuffix}" min="5" max="30" step="1" value="5" oninput="updateCalculator(this.value, '${idSuffix}')" class="w-full h-2.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-brandRed">
-                <div class="flex justify-between text-xs text-zinc-500 font-mono">
-                  <span>Min 5 Laps (₹250)</span>
-                  <span>15 Laps</span>
-                  <span>Max 30 Laps</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="lg:col-span-5 bg-gradient-to-b from-[#18181f] to-[#121217] border border-brandRed/30 rounded-xl p-6 relative overflow-hidden red-glow">
-              <div class="flex justify-between items-center text-xs font-mono uppercase text-zinc-400 border-b border-zinc-800 pb-3">
-                <span>Race Breakdown</span>
-                <span class="text-red-400 font-bold">Baruipur Circuit</span>
-              </div>
-
-              <div class="py-4 space-y-3">
-                <div class="flex justify-between text-sm">
-                  <span class="text-zinc-400">Paid Track Laps</span>
-                  <span id="stat-paid-${idSuffix}" class="text-white font-mono font-bold">5 laps</span>
-                </div>
-                <div class="flex justify-between text-sm text-red-400">
-                  <span class="font-semibold flex items-center gap-1.5"><i data-lucide="zap" class="w-3.5 h-3.5 text-brandRed"></i>Opening Promo Bonus</span>
-                  <span class="font-mono font-bold">+2 Free Laps</span>
-                </div>
-                <div class="pt-2 border-t border-zinc-800 flex justify-between items-baseline">
-                  <span class="text-zinc-300 text-sm font-semibold">Total Laps You Race</span>
-                  <span id="stat-total-${idSuffix}" class="text-3xl font-racing text-white tracking-wide">7 <span class="text-xs font-sans text-red-400 uppercase">Laps Total</span></span>
-                </div>
-                <div class="flex justify-between text-xs text-zinc-400">
-                  <span>Estimated Track Time</span>
-                  <span id="stat-time-${idSuffix}" class="font-mono text-zinc-300 font-bold">~9 Minutes</span>
-                </div>
-              </div>
-
-              <div class="mt-4 p-4 rounded-lg bg-black/60 border border-zinc-800 flex items-center justify-between">
-                <div>
-                  <span class="text-[10px] uppercase font-mono tracking-widest text-zinc-400 block">Counter Payable</span>
-                  <div class="flex items-baseline gap-1">
-                    <span id="stat-price-${idSuffix}" class="text-3xl sm:text-4xl font-racing font-black text-brandRed">₹250</span>
-                    <span id="stat-effective-${idSuffix}" class="text-xs text-zinc-400 font-mono">(₹35.7/lap)</span>
-                  </div>
-                </div>
-                <button onclick="triggerConfetti()" class="px-4 py-2.5 bg-brandRed hover:bg-red-500 text-white font-bold text-xs uppercase tracking-wider rounded shadow-lg shadow-brandRed/30 flex items-center gap-1.5">
-                  <i data-lucide="trophy" class="w-3.5 h-3.5"></i>
-                  <span>Lock In</span>
-                </button>
-              </div>
-
-              <p class="text-[11px] text-zinc-400 text-center mt-3 font-mono">
-                * First ticket counter theke ticket book korte hobe
-              </p>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 2. Calculator Real-Time Engine
-    function updateCalculator(val, idSuffix) {
-      const laps = parseInt(val, 10);
-      const totalLaps = laps + 2;
-      const totalPrice = laps * 50;
-      const effectiveRate = (totalPrice / totalLaps).toFixed(1);
-      const estimatedMins = Math.round(totalLaps * 1.3);
-
-      const label = document.getElementById('paid-laps-label-' + idSuffix);
-      if (label) label.innerText = laps + ' Paid Laps';
-
-      const slider = document.getElementById('slider-' + idSuffix);
-      if (slider) slider.value = laps;
-
-      const statPaid = document.getElementById('stat-paid-' + idSuffix);
-      if (statPaid) statPaid.innerText = laps + ' laps';
-
-      const statTotal = document.getElementById('stat-total-' + idSuffix);
-      if (statTotal) statTotal.innerHTML = totalLaps + ' <span class="text-xs font-sans text-red-400 uppercase">Laps Total</span>';
-
-      const statTime = document.getElementById('stat-time-' + idSuffix);
-      if (statTime) statTime.innerText = '~' + estimatedMins + ' Minutes';
-
-      const statPrice = document.getElementById('stat-price-' + idSuffix);
-      if (statPrice) statPrice.innerText = '₹' + totalPrice;
-
-      const statEffective = document.getElementById('stat-effective-' + idSuffix);
-      if (statEffective) statEffective.innerText = '(₹' + effectiveRate + '/lap)';
-
-      // Highlight active button
-      document.querySelectorAll('.lap-btn-' + idSuffix).forEach(btn => {
-        if (parseInt(btn.getAttribute('data-val'), 10) === laps) {
-          btn.className = `lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-brandRed border-red-500 text-white shadow-lg shadow-brandRed/30 scale-[1.02]`;
-        } else {
-          btn.className = `lap-btn-${idSuffix} py-2.5 sm:py-3 rounded-lg font-racing text-xl sm:text-2xl border bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:text-white`;
-        }
-      });
-    }
-
-    function setLaps(val, idSuffix) {
-      updateCalculator(val, idSuffix);
-    }
-
-    function triggerConfetti() {
-      if (window.confetti) {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#e60000', '#ffffff', '#27272a', '#ff4d4d']
-        });
-      }
-    }
-
-    // 3. Tab Page Switcher
-    function switchPage(pageId) {
-      document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active'));
-      const activeEl = document.getElementById('page-' + pageId);
-      if (activeEl) activeEl.classList.add('active');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        if (btn.getAttribute('data-target') === pageId) {
-          btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-semibold tracking-wide transition-all text-white bg-brandRed/20 border border-brandRed/40 flex items-center gap-2 shadow-sm shadow-brandRed/10';
-          const icon = btn.querySelector('i');
-          if (icon) icon.className = 'w-4 h-4 text-brandRed';
-        } else {
-          btn.className = 'nav-btn px-4 py-2 rounded-md text-sm font-semibold tracking-wide transition-all text-zinc-400 hover:text-white hover:bg-zinc-800/60 flex items-center gap-2';
-          const icon = btn.querySelector('i');
-          if (icon) icon.className = 'w-4 h-4 text-zinc-500';
-        }
-      });
-
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      if (menu) menu.classList.toggle('hidden');
-    }
-
-    function scrollToCalculator() {
-      const el = document.getElementById('calc-section-home');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // 4. Live Track Status (12 PM - 10 PM)
-    function updateTrackStatus() {
-      const now = new Date();
-      const hour = now.getHours();
-      const isOpen = (hour >= 12 && hour < 22);
-
-      const badge = document.getElementById('status-badge');
-      const text = document.getElementById('status-text');
-
-      if (badge && text) {
-        if (isOpen) {
-          badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold tracking-wider uppercase transition-all bg-emerald-500/10 border-emerald-500/40 text-emerald-400';
-          text.innerText = 'Track Open • 12 PM - 10 PM';
-        } else {
-          badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold tracking-wider uppercase transition-all bg-amber-500/10 border-amber-500/40 text-amber-400';
-          text.innerText = 'Opens 12 PM • 12 PM - 10 PM';
-        }
-      }
-    }
-
-    // Init
-    window.addEventListener('DOMContentLoaded', () => {
-      renderCalculator('#calc-section-home .calculator-container', 'home');
-      renderCalculator('#page-pricing .calculator-container', 'pricing');
-      
-      updateCalculator(5, 'home');
-      updateCalculator(5, 'pricing');
-
-      updateTrackStatus();
-      setInterval(updateTrackStatus, 30000);
-
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-    });
-  </script>
 </body>
 </html>
